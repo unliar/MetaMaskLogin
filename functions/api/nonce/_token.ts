@@ -1,10 +1,9 @@
-import { createHash } from "crypto";
 export async function onRequestGet(ctx) {
   const {
     params: { token },
     env,
   } = ctx;
-  const md5 = createHash("md5").update(token).digest("hex");
+  const md5 = crypto.subtle.digest("SHA-256", new TextEncoder().encode(token));
   await env.METAMASK_KV.put(`nonce:${token}`, md5);
 
   return new Response(
