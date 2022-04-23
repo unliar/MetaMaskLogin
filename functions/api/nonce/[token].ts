@@ -11,7 +11,9 @@ export async function onRequestGet(ctx) {
           .map((b) => b.toString(16).padStart(2, "0"))
           .join("")
       );
-    await env.METAMASK_KV.put(`nonce:${token}`, md5);
+    await env.METAMASK_KV.put(`nonce:${token}`, md5, {
+      expirationTtl: 60 * 5,
+    });
 
     return new Response(
       JSON.stringify({
