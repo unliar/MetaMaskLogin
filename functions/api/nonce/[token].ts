@@ -4,17 +4,20 @@ export async function onRequestGet(ctx) {
     env,
   } = ctx;
   try {
-    const md5 = await crypto.subtle.digest(
-      "SHA-256",
-      new TextEncoder().encode(token)
-    );
-    await env.METAMASK_KV.put(`nonce:${token}`, new Uint8Array(md5));
+    const md5 = await crypto.subtle
+      .digest("SHA-256", new TextEncoder().encode(token))
+      .then((r) =>
+        [...new Uint8Array(r)]
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("")
+      );
+    await env.METAMASK_KV.put(`nonce:${token}`, md5);
 
     return new Response(
       JSON.stringify({
         data: {
           token,
-          nonce: new Uint8Array(md5),
+          nonce: md5,
         },
       }),
       {
