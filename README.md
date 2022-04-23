@@ -2,4 +2,4 @@
 
 ## Support by Cloudflare Pages + Workers
 
-[demo is developing](metamasklogin.pages.dev)
+[online demo is on developing](https://metamasklogin.pages.dev)
