@@ -4,7 +4,7 @@ export async function onRequestGet(ctx) {
     env,
   } = ctx;
   try {
-    const md5 = crypto.subtle.digest(
+    const md5 = await crypto.subtle.digest(
       "SHA-256",
       new TextEncoder().encode(token)
     );
