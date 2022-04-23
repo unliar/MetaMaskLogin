@@ -8,13 +8,13 @@ export async function onRequestGet(ctx) {
       "SHA-256",
       new TextEncoder().encode(token)
     );
-    await env.METAMASK_KV.put(`nonce:${token}`, md5);
+    await env.METAMASK_KV.put(`nonce:${token}`, new Uint8Array(md5));
 
     return new Response(
       JSON.stringify({
         data: {
           token,
-          nonce: md5,
+          nonce: new Uint8Array(md5),
         },
       }),
       {
